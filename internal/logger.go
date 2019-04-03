@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/lestrrat-go/file-rotatelogs"
 	"net/http"
+	"os"
 	"path/filepath"
 	"pgl/pkg"
 	"time"
@@ -18,8 +19,20 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 	var errEntry pkg.ErrorReport
 	GetPostData(r.Body, &errEntry, w)
 
+	writeToLog(APPLICATION, errEntry, w)
+}
+
+func HandleTraffic(w http.ResponseWriter, r *http.Request) {
+	var tEntry pkg.TrafficReport
+	GetPostData(r.Body, &tEntry, w)
+
+	writeToLog(CONNECTOR, tEntry, w)
+}
+
+func writeToLog(logType string, entry interface{}, w http.ResponseWriter) {
 	abs, _ := filepath.Abs(".")
-	path := filepath.Join(abs, APPLICATION)
+	os.Mkdir(ROOT, os.ModePerm)
+	path := filepath.Join(abs, ROOT, logType)
 
 	writer, err := getLogWriter(path)
 	if err != nil {
@@ -30,7 +43,7 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 
 	logEntry := pkg.LogEntry{
 		Timestamp: time.Now().Format(time.RFC850),
-		Entry:     errEntry,
+		Entry:     entry,
 	}
 
 	var buffer bytes.Buffer
@@ -43,10 +56,6 @@ func HandleError(w http.ResponseWriter, r *http.Request) {
 	buffer.WriteString("\n")
 
 	writer.Write(buffer.Bytes())
-}
-
-func HandleTraffic(w http.ResponseWriter, r *http.Request) {
-
 }
 
 func getLogWriter(path string) (w *rotatelogs.RotateLogs, err error) {

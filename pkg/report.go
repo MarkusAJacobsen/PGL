@@ -6,7 +6,9 @@ type ErrorReport struct {
 	Code int    `json:"code,omitempty"`
 }
 
-type TrafficReport struct{}
+type TrafficReport struct {
+	Msg string `json:"msg"`
+}
 
 type LogEntry struct {
 	Timestamp string
