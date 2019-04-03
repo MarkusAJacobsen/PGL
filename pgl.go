@@ -16,7 +16,9 @@ func main() {
 	}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/report", internal.HandleReport).Methods(http.MethodPost)
+	rr := r.PathPrefix("/report").Subrouter()
+	rr.HandleFunc("/error", internal.HandleError).Methods(http.MethodPost)
+	rr.HandleFunc("/traffic", internal.HandleTraffic).Methods(http.MethodPost)
 
 	srv := &http.Server{
 		Handler:      r,
