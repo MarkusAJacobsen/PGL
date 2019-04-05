@@ -3,11 +3,11 @@ package internal
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/MarkusAJacobsen/pgl/pkg"
 	"github.com/lestrrat-go/file-rotatelogs"
 	"net/http"
 	"os"
 	"path/filepath"
-	"pgl/pkg"
 	"time"
 )
 

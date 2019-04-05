@@ -1,11 +1,11 @@
 package main
 
 import (
+	"github.com/MarkusAJacobsen/pgl/internal"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
-	"pgl/internal"
 	"time"
 )
 

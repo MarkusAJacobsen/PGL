@@ -1,4 +1,4 @@
-module pgl
+module github.com/MarkusAJacobsen/pgl
 
 require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
