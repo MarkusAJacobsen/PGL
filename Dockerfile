@@ -6,7 +6,6 @@ RUN export GO111MODULE=on
 RUN export GOOS=linux
 RUN go build -o pgl .
 
-ENTRYPOINT ./pgl
-
 EXPOSE 6113:6113
-ENV PORT=6113
+
+CMD ["./pgl"]
