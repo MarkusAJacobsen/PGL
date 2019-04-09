@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/MarkusAJacobsen/pgl/pkg"
 	"github.com/lestrrat-go/file-rotatelogs"
+	"github.com/sirupsen/logrus"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -56,6 +57,7 @@ func writeToLog(logType string, entry interface{}, w http.ResponseWriter) {
 	buffer.WriteString("\n")
 
 	writer.Write(buffer.Bytes())
+	logrus.Infoln(string(b))
 }
 
 func getLogWriter(path string) (w *rotatelogs.RotateLogs, err error) {
