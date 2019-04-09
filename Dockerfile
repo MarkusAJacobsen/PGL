@@ -9,4 +9,4 @@ RUN go build -o pgl .
 ENTRYPOINT ./pgl
 
 EXPOSE 6113:6113
-ENV PORT=3333
+ENV PORT=6113
