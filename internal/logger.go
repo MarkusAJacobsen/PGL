@@ -31,7 +31,7 @@ func HandleTraffic(w http.ResponseWriter, r *http.Request) {
 }
 
 func writeToLog(logType string, entry interface{}, w http.ResponseWriter) {
-	abs, _ := filepath.Abs(".")
+	abs, _ := filepath.Abs("/var/pgl/logs")
 	os.Mkdir(ROOT, os.ModePerm)
 	path := filepath.Join(abs, ROOT, logType)
 
