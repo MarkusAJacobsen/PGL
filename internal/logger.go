@@ -12,32 +12,33 @@ import (
 	"time"
 )
 
-const CONNECTOR = "connector-log"
-const APPLICATION = "application-log"
-const ROOT = "/var/pgl/logs"
+const Connector = "connector-log"
+const Application = "application-log"
 
 func HandleError(w http.ResponseWriter, r *http.Request) {
 	var errEntry pkg.ErrorReport
 	GetPostData(r.Body, &errEntry, w)
 
-	writeToLog(APPLICATION, errEntry, w)
+	writeToLog(Application, errEntry, w)
 }
 
 func HandleTraffic(w http.ResponseWriter, r *http.Request) {
 	var tEntry pkg.TrafficReport
 	GetPostData(r.Body, &tEntry, w)
 
-	writeToLog(CONNECTOR, tEntry, w)
+	writeToLog(Connector, tEntry, w)
 }
 
 func writeToLog(logType string, entry interface{}, w http.ResponseWriter) {
-	abs, err := filepath.Abs(ROOT)
+	root := getLogPath()
+
+	abs, err := filepath.Abs(root)
 	if err != nil {
 		http.Error(w, "An error occurred", 500)
 		return
 	}
 
-	os.Chmod(ROOT, os.ModePerm)
+	os.Mkdir(root, os.ModePerm)
 	path := filepath.Join(abs, logType)
 
 	writer, err := getLogWriter(path)

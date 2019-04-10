@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"github.com/MarkusAJacobsen/pgl/internal"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
@@ -15,8 +16,12 @@ func main() {
 		logrus.Panic("Port not sat")
 	}
 
+	flag.Bool("d", false, "Debug")
+	flag.Parse()
+
 	r := mux.NewRouter()
 	rr := r.PathPrefix("/report").Subrouter()
+	rr.HandleFunc("", internal.HandleReport).Methods(http.MethodGet)
 	rr.HandleFunc("/error", internal.HandleError).Methods(http.MethodPost)
 	rr.HandleFunc("/traffic", internal.HandleTraffic).Methods(http.MethodPost)
 
