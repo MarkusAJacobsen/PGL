@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>{{.PageTitle}}</h1>
+        <table style="width: 90%">
+            <tr>
+                <th>Timestamp</th>
+                <th>Entry</th>
+            </tr>
+            {{ range .Entries }}
+                    <tr>
+                        <td>{{.Timestamp}}</td>
+                        <td>{{.Entry}}</td>
+                    </tr>
+            {{ end }}
+        </table>
+    </body>
+</html>
